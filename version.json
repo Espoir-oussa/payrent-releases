@@ -1,18 +1,13 @@
 {
     "version": "1.0.0",
-    "versionCode": 1,
-    "releaseDate": "2024-12-10",
-    "apkUrl": "https://github.com/Espoir-oussa/payrent-releases/releases/download/v1.0.0/payrent-v1.0.0.apk",
+    "apkUrl": "https://github.com/espoir-oussa/payrent-releases/releases/download/v1.0.0/app-release.apk",
     "size": "25 MB",
+    "releaseDate": "2025-12-10",
     "changelog": [
-        "🎉 Première version de PayRent",
-        "📧 Système d'invitation par email",
-        "💰 Gestion des loyers et paiements",
-        "🏠 Gestion des biens immobiliers"
+        "Première version de PayRent",
+        "Gestion des loyers et paiements",
+        "Système d'invitations locataires",
+        "Chat intégré"
     ],
-    "minAndroidVersion": "5.0",
-    "requirements": {
-        "android": "5.0+",
-        "ios": "Bientôt disponible"
-    }
+    "minAndroidVersion": "5.0"
 }
