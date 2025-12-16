@@ -1,108 +1,39 @@
-# PayRent - Page de Redirection et Téléchargement
+# Landing page - tmp-payrent-releases
 
-Cette page web sert de :
-1. **Page de redirection** pour les liens d'invitation par email
-2. **Page de téléchargement** pour l'application PayRent
+Cette page sert de landing page simple pour télécharger l'APK de test de PayRent.
 
-## 🚀 Déploiement sur GitHub Pages
+## Processus manuel (option A)
+1. Construis l'APK localement :
+   ```bash
+   flutter build apk --release
+   ```
+2. Crée une **Release** sur le repository que tu utilises pour héberger les APKs (ou sur `Espoir-oussa/payrent-releases`), puis téléverse l'APK en tant qu'asset.
+3. Recopie l'URL de l'asset APK (ou de la release) et met à jour `tmp-payrent-releases/version.json` :
+   - `version`: numéro (ex. "1.0.2")
+   - `apkUrl`: URL complète de l'asset APK
+   - `releasePage`: URL de la page Release (optionnel)
+   - `size`: taille (ex. "25 MB")
+   - `releaseDate`: date de release
+   - `changelog`: tableau de chaînes
 
-### Étape 1 : Créer le repository
+### Script d'aide (optionnel)
+Un script PowerShell `scripts/publish_apk.ps1` est fourni pour mettre à jour rapidement `tmp-payrent-releases/version.json` et committer/pusher la modification.
 
-1. Allez sur GitHub et créez un nouveau repository nommé `payrent-releases`
-2. Clonez ce dossier `web_redirect` dans le repository
-
-### Étape 2 : Activer GitHub Pages
-
-1. Allez dans **Settings** > **Pages**
-2. Source : **Deploy from a branch**
-3. Branch : **main** (ou master)
-4. Folder : **/ (root)**
-5. Cliquez **Save**
-
-### Étape 3 : Votre URL sera
-
-```
-https://espoir-oussa.github.io/payrent-releases/
-```
-
-## 📱 Publier une nouvelle version de l'APK
-
-### 1. Compiler l'APK
-
-```bash
-cd D:\Flutter\payrent
-flutter build apk --release
-```
-
-L'APK sera dans : `build/app/outputs/flutter-apk/app-release.apk`
-
-### 2. Créer une Release sur GitHub
-
-1. Allez sur votre repo `payrent-releases`
-2. Cliquez **Releases** > **Create a new release**
-3. Tag : `v1.0.1` (ou la version)
-4. Title : `PayRent v1.0.1`
-5. Glissez-déposez l'APK (renommez-le en `payrent-v1.0.1.apk`)
-6. Cliquez **Publish release**
-
-### 3. Mettre à jour version.json
-
-Modifiez le fichier `version.json` :
-
+## Exemple `version.json`
 ```json
 {
-    "version": "1.0.1",
-    "versionCode": 2,
-    "releaseDate": "2024-12-15",
-    "apkUrl": "https://github.com/Espoir-oussa/payrent-releases/releases/download/v1.0.1/payrent-v1.0.1.apk",
-    "size": "25 MB",
-    "changelog": [
-        "🐛 Corrections de bugs",
-        "✨ Nouvelles fonctionnalités"
-    ]
+  "version": "1.0.2",
+  "apkUrl": "https://github.com/<owner>/payrent-releases/releases/download/v1.0.2/payrent-v1.0.2.apk",
+  "releasePage": "https://github.com/<owner>/payrent-releases/releases/tag/v1.0.2",
+  "size": "25 MB",
+  "releaseDate": "2025-12-16",
+  "changelog": ["Corrections de bugs"]
 }
 ```
 
-### 4. Commit et Push
+---
 
-```bash
-git add version.json
-git commit -m "Mise à jour vers v1.0.1"
-git push
-```
+Si tu veux, je peux :
+- t'ajouter un petit bouton d'upload pour faciliter la maintenance locale (mais nécessite config),
+- ou automatiser la création de Release avec `gh` (option B) plus tard.
 
-La page affichera automatiquement la nouvelle version !
-
-## 🔗 Configuration dans l'app Flutter
-
-Dans `lib/core/services/email_service.dart`, mettez l'URL :
-
-```dart
-static const String webBaseUrl = 'https://espoir-oussa.github.io/payrent-releases';
-```
-
-## 📁 Structure des fichiers
-
-```
-payrent-releases/
-├── index.html      # Page principale
-├── version.json    # Informations de version (à mettre à jour)
-└── README.md       # Ce fichier
-```
-
-## 🎨 Personnalisation
-
-- **Logo** : Modifiez l'emoji 🏠 dans le HTML ou ajoutez une vraie image
-- **Couleurs** : Modifiez les variables CSS dans `:root`
-- **Textes** : Modifiez directement dans le HTML
-
-## ✅ Test local
-
-Pour tester localement avant de déployer :
-
-```bash
-cd web_redirect
-python -m http.server 8080
-```
-
-Puis ouvrez : `http://localhost:8080?token=test123&action=accept`

@@ -4,10 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#171810">
-    <meta name="description" content="PayRent - Application de gestion locative simplifiée">
-    <title>PayRent - Gestion Locative</title>
-    
-    <!-- Tailwind CSS -->
+    <meta name="description" content="Landing page - Téléchargement APK PayRent">
+    <title>PayRent - Téléchargement APK</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+      .container { max-width: 900px; margin: 40px auto; }
+      .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+      .muted { color: #6b7280 }
+    </style>
+</head>
+<body class="bg-gray-50">
+  <div class="container px-4">
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold">PayRent — Téléchargement</h1>
+          <p class="muted text-sm">Page de téléchargement de l'APK (version de test).</p>
+        </div>
+        <div class="text-right">
+          <img src="./payrent_marron.png" alt="logo" style="height:48px">
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <div id="status" class="mb-6">
+        <p class="muted">Chargement des informations...</p>
+      </div>
+
+      <div id="release" class="hidden">
+        <div class="mb-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-sm text-gray-500">Version</div>
+              <div id="version" class="text-xl font-medium">-</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm text-gray-500">Taille</div>
+              <div id="size" class="text-sm">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="text-sm text-gray-500">Changelog</div>
+          <ul id="changelog" class="list-disc pl-5 text-sm text-gray-700"></ul>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a id="downloadBtn" class="inline-block bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 disabled:opacity-60" href="#" target="_blank">Télécharger l'APK</a>
+          <a id="releaseLink" class="text-sm muted" href="#" target="_blank">Voir la release</a>
+        </div>
+      </div>
+
+      <hr class="my-6">
+
+      <div class="text-sm text-gray-600">
+        <p><strong>Mode opératoire (manuel)</strong></p>
+        <ol class="list-decimal pl-5 mt-2">
+          <li>Construis l'APK localement : <code>flutter build apk --release</code>.</li>
+          <li>Crée une Release GitHub dans le repository utilisé pour héberger les APKs et upload l'APK en tant qu'asset.</li>
+          <li>Dans le dépôt de la landing page (`tmp-payrent-releases`), mets à jour <code>version.json</code> (ou utilise le script <code>scripts/publish_apk.ps1</code> fourni) puis pousse sur la branche <code>main</code>.</li>
+          <li>La page se mettra à jour automatiquement via GitHub Pages.</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    async function loadVersion() {
+      try {
+        const res = await fetch('version.json', {cache: 'no-store'});
+        if (!res.ok) throw new Error('version.json introuvable');
+        const data = await res.json();
+
+        document.getElementById('status').style.display = 'none';
+        document.getElementById('release').classList.remove('hidden');
+
+        document.getElementById('version').textContent = data.version || '-';
+        document.getElementById('size').textContent = data.size || '-';
+
+        const changelogEl = document.getElementById('changelog');
+        changelogEl.innerHTML = '';
+        (data.changelog || []).forEach(item => {
+          const li = document.createElement('li'); li.textContent = item; changelogEl.appendChild(li);
+        });
+
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (data.apkUrl && data.apkUrl.length>0) {
+          downloadBtn.href = data.apkUrl;
+          downloadBtn.classList.remove('opacity-60');
+        } else {
+          downloadBtn.removeAttribute('href');
+          downloadBtn.classList.add('opacity-60');
+          downloadBtn.textContent = 'APK non disponible';
+        }
+
+        // Link to the release page if provided
+        const releaseLink = document.getElementById('releaseLink');
+        releaseLink.href = data.releasePage || '#';
+        releaseLink.textContent = data.releasePage ? 'Voir la release' : '';
+      } catch (e) {
+        document.getElementById('status').innerHTML = '<p class="text-red-500">Erreur: impossible de charger <code>version.json</code></p>';
+      }
+    }
+    loadVersion();
+  </script>
+</body>
+</html>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
