@@ -1,15 +1,10 @@
 ﻿{
-    "size":  "52.1 MB",
-    "version":  "1.0.3",
-    "minAndroidVersion":  "5.0",
-    "changelog":  [
-                      "Améliorations et corrections de bugs"
-                  ],
-    "releaseDate":  "2025-12-16",
-    "apkUrl": "",
-    "releasePage": "",
-    "size": "",
-    "changelog": [
-      "Page de téléchargement initiale"
-    ]
+  "version": "1.0.0",
+  "apkUrl": "https://github.com/Espoir-oussa/payrent-releases/releases/download/v1.0.0/app-release.apk",
+  "releasePage": "https://github.com/Espoir-oussa/payrent-releases/releases/tag/v1.0.0",
+  "size": "51.7 MB",
+  "releaseDate": "2025-12-16",
+  "changelog": [
+    "Notes de release"
+  ]
 }
