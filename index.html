@@ -1,121 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#171810">
-    <meta name="description" content="Landing page - Téléchargement APK PayRent">
-    <title>PayRent - Téléchargement APK</title>
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
-      .container { max-width: 900px; margin: 40px auto; }
-      .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
-      .muted { color: #6b7280 }
-    </style>
-</head>
-<body class="bg-gray-50">
-  <div class="container px-4">
-    <div class="card">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-semibold">PayRent — Téléchargement</h1>
-          <p class="muted text-sm">Page de téléchargement de l'APK (version de test).</p>
-        </div>
-        <div class="text-right">
-          <img src="./payrent_marron.png" alt="logo" style="height:48px">
-        </div>
-      </div>
+    <meta name="description" content="PayRent - L'application tout-en-un pour gérer simplement vos locations, loyers, paiements et documents. Pour propriétaires et locataires.">
+    <meta name="keywords" content="PayRent, gestion locative, location, loyer, paiement sécurisé, quittance, propriétaire, locataire, immobilier, application Android">
+    <link rel="canonical" href="https://payrent.app/">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <meta property="og:title" content="PayRent - Gestion locative simplifiée">
+    <meta property="og:description" content="Gérez vos locations, paiements et documents en toute simplicité. Téléchargez PayRent sur Android dès maintenant.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://payrent.app/">
+    <meta property="og:image" content="https://payrent.app/images/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <title>PayRent - Gestion locative simplifiée</title>
 
-      <hr class="my-4">
-
-      <div id="status" class="mb-6">
-        <p class="muted">Chargement des informations...</p>
-      </div>
-
-      <div id="release" class="hidden">
-        <div class="mb-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="text-sm text-gray-500">Version</div>
-              <div id="version" class="text-xl font-medium">-</div>
-            </div>
-            <div class="text-right">
-              <div class="text-sm text-gray-500">Taille</div>
-              <div id="size" class="text-sm">-</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <div class="text-sm text-gray-500">Changelog</div>
-          <ul id="changelog" class="list-disc pl-5 text-sm text-gray-700"></ul>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <a id="downloadBtn" class="inline-block bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 disabled:opacity-60" href="#" target="_blank">Télécharger l'APK</a>
-          <a id="releaseLink" class="text-sm muted" href="#" target="_blank">Voir la release</a>
-        </div>
-      </div>
-
-      <hr class="my-6">
-
-      <div class="text-sm text-gray-600">
-        <p><strong>Mode opératoire (manuel)</strong></p>
-        <ol class="list-decimal pl-5 mt-2">
-          <li>Construis l'APK localement : <code>flutter build apk --release</code>.</li>
-          <li>Crée une Release GitHub dans le repository utilisé pour héberger les APKs et upload l'APK en tant qu'asset.</li>
-          <li>Dans le dépôt de la landing page (`tmp-payrent-releases`), mets à jour <code>version.json</code> (ou utilise le script <code>scripts/publish_apk.ps1</code> fourni) puis pousse sur la branche <code>main</code>.</li>
-          <li>La page se mettra à jour automatiquement via GitHub Pages.</li>
-        </ol>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    async function loadVersion() {
-      try {
-        const res = await fetch('version.json', {cache: 'no-store'});
-        if (!res.ok) throw new Error('version.json introuvable');
-        const data = await res.json();
-
-        document.getElementById('status').style.display = 'none';
-        document.getElementById('release').classList.remove('hidden');
-
-        document.getElementById('version').textContent = data.version || '-';
-        document.getElementById('size').textContent = data.size || '-';
-
-        const changelogEl = document.getElementById('changelog');
-        changelogEl.innerHTML = '';
-        (data.changelog || []).forEach(item => {
-          const li = document.createElement('li'); li.textContent = item; changelogEl.appendChild(li);
-        });
-
-        const downloadBtn = document.getElementById('downloadBtn');
-        if (data.apkUrl && data.apkUrl.length>0) {
-          downloadBtn.href = data.apkUrl;
-          downloadBtn.classList.remove('opacity-60');
-        } else {
-          downloadBtn.removeAttribute('href');
-          downloadBtn.classList.add('opacity-60');
-          downloadBtn.textContent = 'APK non disponible';
-        }
-
-        // Link to the release page if provided
-        const releaseLink = document.getElementById('releaseLink');
-        releaseLink.href = data.releasePage || '#';
-        releaseLink.textContent = data.releasePage ? 'Voir la release' : '';
-      } catch (e) {
-        document.getElementById('status').innerHTML = '<p class="text-red-500">Erreur: impossible de charger <code>version.json</code></p>';
-      }
-    }
-    loadVersion();
-  </script>
-</body>
-</html>
-
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -125,319 +27,251 @@
                         'pr-dark': '#171810',
                         'pr-red': '#5F2525',
                         'pr-red-light': '#7a3333',
-                        'pr-light': '#F3F4F8',
-                        'pr-success': '#4CAF50',
-                        'pr-gray': '#9E9E9E',
-                        'pr-gray-light': '#F8F9FA',
+                        'pr-light': '#F9FAFB',
+                        'pr-success': '#10B981',
+                        'pr-gray': '#6B7280',
                     },
                     fontFamily: {
                         'museo': ['MuseoModerno', 'system-ui', 'sans-serif'],
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
                     },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                    },
-                    fontSize: {
-                        'xxs': '0.65rem',
-                    }
                 }
             }
         }
     </script>
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Police MuseoModerno */
         @font-face {
             font-family: 'MuseoModerno';
             src: url('./fonts/MuseoModerno.ttf') format('truetype');
             font-weight: 100 900;
-            font-style: normal;
             font-display: swap;
         }
-        
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .card-hover {
+            transition: all 0.4s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(95, 37, 37, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #5F2525, #7a3333);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #7a3333, #9b4040);
+        }
+
         .spinner {
-            border: 3px solid rgba(95, 37, 37, 0.2);
+            border: 4px solid rgba(95, 37, 37, 0.2);
             border-top-color: #5F2525;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
-        .animate-pulse-slow {
-            animation: pulse 3s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -15px rgba(95, 37, 37, 0.15);
-        }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        
-        /* Pour les très petits écrans */
-        @media (max-width: 360px) {
-            .xs-text-sm {
-                font-size: 0.875rem !important;
-            }
-            .xs-p-4 {
-                padding: 1rem !important;
-            }
-        }
     </style>
 </head>
-<body class="bg-pr-gray-light min-h-screen font-museo">
-    
+
+<body class="bg-pr-light min-h-screen font-sans text-pr-dark">
+
     <!-- Loading Overlay -->
-    <div id="loading" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-50 hidden items-center justify-center flex-col">
-        <div class="spinner w-10 h-10 sm:w-12 sm:h-12 mb-3 sm:mb-4"></div>
-        <p class="text-pr-dark text-base sm:text-lg animate-pulse-slow">Ouverture de PayRent...</p>
+    <div id="loading" class="fixed inset-0 bg-white/95 backdrop-blur-md z-50 hidden flex items-center justify-center flex-col gap-4">
+        <div class="spinner w-12 h-12"></div>
+        <p class="text-lg font-medium animate-pulse">Ouverture de PayRent...</p>
     </div>
-    
-    <!-- Contenu principal -->
-    <div class="min-h-screen relative overflow-hidden">
-        <!-- Background decorative elements - cachés sur mobile pour performance -->
-        <div class="hidden sm:block absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-pr-red/5 to-transparent -z-10"></div>
-        <div class="hidden lg:block absolute bottom-0 right-0 w-96 h-96 bg-gradient-radial from-pr-red/3 via-transparent to-transparent -z-10"></div>
-        
+
+    <div class="relative overflow-hidden">
+
         <!-- Navbar -->
-        <nav class="glass-effect border-b border-gray-100 sticky top-0 z-30">
-            <div class="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-14 sm:h-16">
-                    <div class="flex items-center gap-2 sm:gap-3">
-                        <img src="./payrent_blanc.png" alt="PayRent" class="h-8 sm:h-10 md:h-12">
-                        <span class="text-pr-dark font-bold text-lg sm:text-xl md:text-2xl">PayRent</span>
+        <nav class="glass-effect border-b border-gray-200 sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center gap-3">
+                        <img src="./payrent_blanc.png" alt="Logo PayRent" class="h-10">
+                        <span class="font-bold text-2xl font-museo">PayRent</span>
                     </div>
-                    <div id="version-badge" class="text-pr-dark text-xs sm:text-sm font-medium bg-pr-light px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 rounded-full border border-gray-200">
+                    <div id="version-badge" class="bg-white/80 px-4 py-1.5 rounded-full text-sm font-medium border border-gray-200">
                         v1.0.0
                     </div>
                 </div>
             </div>
         </nav>
-        
-        <!-- Main Content -->
-        <main class="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
-            <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-center">
-                <!-- Left Column - Hero -->
-                <div class="lg:w-1/2 w-full">
-                    <div class="mb-6 sm:mb-8">
-                        <h1 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-pr-dark mb-3 sm:mb-4 leading-tight">
-                            Gestion locative
-                            <span class="text-pr-red block mt-1">simplifiée</span>
+
+        <!-- Hero Section -->
+        <section class="pt-12 pb-16 lg:pt-20 lg:pb-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+                    <!-- Left - Text & Stats -->
+                    <div class="order-2 lg:order-1">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-museo leading-tight">
+                            Gestion locative<br>
+                            <span class="text-pr-red">simplifiée</span>
                         </h1>
-                        <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-6 sm:mb-8">
-                            Gérez vos locations, paiements et documents en toute simplicité avec PayRent. 
-                            L'application tout-en-un pour propriétaires et locataires.
+                        <p class="mt-6 text-lg sm:text-xl text-gray-600 leading-relaxed">
+                            L’application tout-en-un qui facilite la vie des propriétaires et des locataires : paiements sécurisés, quittances automatiques, documents centralisés et communication fluide.
                         </p>
-                        
+
                         <!-- Stats -->
-                        <div class="flex gap-4 sm:gap-6 mb-6 sm:mb-8">
-                            <div class="text-center flex-1">
-                                <div class="text-xl sm:text-2xl font-bold text-pr-red">1000+</div>
-                                <div class="text-xs sm:text-sm text-gray-500">Utilisateurs</div>
+                        <div class="grid grid-cols-3 gap-8 mt-10">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-pr-red">1000+</div>
+                                <div class="text-sm text-gray-500 mt-1">Utilisateurs</div>
                             </div>
-                            <div class="text-center flex-1">
-                                <div class="text-xl sm:text-2xl font-bold text-pr-red">99%</div>
-                                <div class="text-xs sm:text-sm text-gray-500">Satisfaction</div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-pr-red">99%</div>
+                                <div class="text-sm text-gray-500 mt-1">Satisfaction</div>
                             </div>
-                            <div class="text-center flex-1">
-                                <div class="text-xl sm:text-2xl font-bold text-pr-red">4.8★</div>
-                                <div class="text-xs sm:text-sm text-gray-500">Évaluation</div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-pr-red">4.8★</div>
+                                <div class="text-sm text-gray-500 mt-1">Note moyenne</div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Invitation Box -->
-                    <div id="invitation-box" class="glass-effect rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-green-100 shadow-sm card-hover hidden">
-                        <div class="flex items-start gap-3 sm:gap-4">
-                            <div id="inv-icon-bg" class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg id="inv-icon" class="w-5 h-5 sm:w-6 sm:h-6 text-pr-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                                </svg>
-                            </div>
-                            <div class="flex-1">
-                                <h3 id="invitation-title" class="font-semibold text-gray-900 mb-1 sm:mb-2 text-base sm:text-lg">Vous avez une invitation !</h3>
-                                <p id="invitation-text" class="text-gray-600 text-sm sm:text-base">Vous avez été invité à rejoindre un logement sur PayRent.</p>
-                                <div class="mt-3 sm:mt-4">
-                                    <button onclick="openApp()" class="inline-flex items-center gap-2 text-pr-red font-semibold hover:text-pr-red-light transition-colors text-sm sm:text-base">
-                                        <span>Accepter l'invitation</span>
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                        </svg>
+
+                        <!-- Invitation Box (si token présent) -->
+                        <div id="invitation-box" class="mt-10 glass-effect rounded-2xl p-6 border border-pr-success/20 shadow-lg card-hover hidden">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-pr-success/10 rounded-xl flex items-center justify-center">
+                                    <svg class="w-7 h-7 text-pr-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Vous avez une invitation !</h3>
+                                    <p class="text-gray-600 mt-1">Acceptez-la directement dans l'application PayRent.</p>
+                                    <button onclick="openApp()" class="mt-4 text-pr-red font-semibold hover:text-pr-red-light flex items-center gap-2">
+                                        Accepter l'invitation
+                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Right Column - Actions -->
-                <div class="lg:w-1/2 w-full">
-                    <div class="glass-effect rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-lg card-hover xs-p-4">
-                        <div class="text-center mb-6 sm:mb-8">
-                            <h2 class="text-xl sm:text-2xl font-bold text-pr-dark mb-1 sm:mb-2 xs-text-sm">Ouvrir PayRent</h2>
-                            <p class="text-gray-600 text-sm sm:text-base">Choisissez votre méthode préférée</p>
-                        </div>
-                        
-                        <!-- Primary Action Button -->
-                        <div class="mb-6 sm:mb-8">
-                            <button onclick="openApp()" class="w-full bg-pr-red hover:bg-pr-red-light text-white font-semibold py-3 sm:py-4 md:py-5 px-4 sm:px-6 rounded-xl sm:rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 shadow-lg shadow-pr-red/20 hover:shadow-xl hover:shadow-pr-red/30 card-hover group">
-                                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 rounded-lg sm:rounded-xl flex items-center justify-center">
-                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+
+                    <!-- Right - Actions Card -->
+                    <div class="order-1 lg:order-2">
+                        <div class="glass-effect rounded-3xl p-8 lg:p-10 shadow-2xl card-hover border border-gray-100">
+                            <h2 class="text-2xl sm:text-3xl font-bold text-center mb-2">Commencer avec PayRent</h2>
+                            <p class="text-center text-gray-600 mb-10">Ouvrez ou téléchargez l'application en un clic</p>
+
+                            <!-- Ouvrir l'app -->
+                            <button onclick="openApp()" class="w-full btn-primary text-white font-semibold py-5 rounded-2xl shadow-lg flex items-center justify-center gap-4 card-hover group">
+                                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-7 h-7 group-hover:scale-110 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/>
                                     </svg>
                                 </div>
-                                <span class="text-base sm:text-lg">Ouvrir dans l'application</span>
+                                <div class="text-left">
+                                    <div class="text-lg">Ouvrir dans l'application</div>
+                                    <div class="text-sm opacity-90">Expérience optimale recommandée</div>
+                                </div>
                             </button>
-                            <p class="text-center text-gray-500 text-xs sm:text-sm mt-2 sm:mt-3">Recommandé pour une meilleure expérience</p>
-                        </div>
-                        
-                        <!-- Separator -->
-                        <div class="relative mb-6 sm:mb-8">
-                            <div class="absolute inset-0 flex items-center">
-                                <div class="w-full border-t border-gray-200"></div>
+
+                            <div class="my-10 relative">
+                                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-300"></div></div>
+                                <div class="relative flex justify-center text-sm"><span class="px-4 bg-white text-gray-500">Ou télécharger</span></div>
                             </div>
-                            <div class="relative flex justify-center text-sm">
-                                <span class="px-3 sm:px-4 bg-white text-gray-500 text-xs sm:text-sm">Télécharger l'application</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Download Section -->
-                        <div>
-                            <h3 class="text-center font-semibold text-gray-900 mb-4 sm:mb-6 flex items-center justify-center gap-2 text-lg sm:text-lg">
-                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-pr-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                </svg>
-                                Téléchargements
-                            </h3>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                                <!-- Android -->
-                                <button onclick="downloadAndroid()" id="android-download" class="group p-3 sm:p-4 md:p-5 bg-pr-light hover:bg-pr-red rounded-xl sm:rounded-2xl transition-all duration-300 text-center card-hover">
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-2 sm:mb-3 bg-white group-hover:bg-white rounded-lg sm:rounded-xl flex items-center justify-center transition-colors shadow-sm">
-                                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-500 group-hover:text-green-600 transition-colors" viewBox="0 0 24 24" fill="currentColor">
+
+                            <!-- Téléchargements -->
+                            <div class="grid grid-cols-2 gap-6">
+                                <button onclick="downloadAndroid()" id="android-download" class="p-6 bg-gray-50 hover:bg-pr-red rounded-2xl transition-all card-hover group text-center">
+                                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl shadow flex items-center justify-center">
+                                        <svg class="w-10 h-10 text-green-600 group-hover:scale-110 transition" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M17.523 15.341c-.5 0-.91.41-.91.91s.41.91.91.91.91-.41.91-.91-.41-.91-.91-.91zm-11.046 0c-.5 0-.91.41-.91.91s.41.91.91.91.91-.41.91-.91-.41-.91-.91-.91zm11.405-6.02l1.894-3.28c.104-.18.044-.41-.136-.514-.18-.104-.41-.044-.514.136l-1.918 3.32C15.56 8.343 13.85 7.943 12 7.943s-3.56.4-5.208 1.04L4.874 5.663c-.104-.18-.334-.24-.514-.136-.18.104-.24.334-.136.514l1.894 3.28C2.78 11.088.5 14.65.5 18.788h23c0-4.138-2.28-7.7-5.618-9.467z"/>
                                         </svg>
                                     </div>
-                                    <p class="font-semibold text-gray-900 group-hover:text-white text-sm sm:text-base transition-colors mb-0.5 sm:mb-1">Android</p>
-                                    <p id="android-version" class="text-gray-500 group-hover:text-white/90 transition-colors text-xs sm:text-sm">Chargement...</p>
-                                    <div class="mt-2 sm:mt-3 text-xxs sm:text-xs text-gray-400 group-hover:text-white/70 transition-colors">APK • Sécurisé</div>
+                                    <p class="font-bold text-lg group-hover:text-white transition">Android</p>
+                                    <p id="android-version" class="text-sm text-gray-500 group-hover:text-white/90 transition mt-1">Chargement...</p>
                                 </button>
-                                
-                                <!-- iOS -->
-                                <div class="p-3 sm:p-4 md:p-5 bg-pr-light rounded-xl sm:rounded-2xl text-center border-2 border-dashed border-gray-200">
-                                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mx-auto mb-2 sm:mb-3 bg-white rounded-lg sm:rounded-xl flex items-center justify-center shadow-sm">
-                                        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+
+                                <div class="p-6 bg-gray-50 rounded-2xl flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-300">
+                                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-2xl shadow flex items-center justify-center">
+                                        <svg class="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                                         </svg>
                                     </div>
-                                    <p class="font-semibold text-gray-500 text-sm sm:text-base mb-0.5 sm:mb-1">iOS</p>
-                                    <p class="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3">Bientôt disponible</p>
-                                    <div class="mt-1 sm:mt-2">
-                                        <span class="inline-block px-2 sm:px-3 py-0.5 sm:py-1 bg-gray-100 text-gray-500 text-xxs sm:text-xs rounded-full">Prochainement</span>
-                                    </div>
+                                    <p class="font-bold text-lg text-gray-500">iOS</p>
+                                    <p class="text-sm text-gray-400 mt-1">Bientôt disponible</p>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Features List -->
-                        <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
-                            <h4 class="font-semibold text-gray-900 mb-3 sm:mb-4 text-center text-sm sm:text-base">Fonctionnalités principales</h4>
-                            <div class="grid grid-cols-2 gap-2 sm:gap-3">
-                                <div class="flex items-center gap-1.5 sm:gap-2 text-gray-600 text-xs sm:text-sm">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span class="truncate">Paiements sécurisés</span>
-                                </div>
-                                <div class="flex items-center gap-1.5 sm:gap-2 text-gray-600 text-xs sm:text-sm">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span class="truncate">Documents en ligne</span>
-                                </div>
-                                <div class="flex items-center gap-1.5 sm:gap-2 text-gray-600 text-xs sm:text-sm">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span class="truncate">Messagerie intégrée</span>
-                                </div>
-                                <div class="flex items-center gap-1.5 sm:gap-2 text-gray-600 text-xs sm:text-sm">
-                                    <svg class="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span class="truncate">Notifications</span>
+
+                            <!-- Fonctionnalités rapides -->
+                            <div class="mt-10 pt-8 border-t border-gray-200">
+                                <h4 class="text-center font-semibold mb-6">Fonctionnalités clés</h4>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div class="flex items-center gap-3"><svg class="w-5 h-5 text-pr-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Paiements sécurisés</span></div>
+                                    <div class="flex items-center gap-3"><svg class="w-5 h-5 text-pr-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Quittances auto</span></div>
+                                    <div class="flex items-center gap-3"><svg class="w-5 h-5 text-pr-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Documents centralisés</span></div>
+                                    <div class="flex items-center gap-3"><svg class="w-5 h-5 text-pr-success flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Messagerie intégrée</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-        
+        </section>
+
         <!-- Footer -->
-        <footer class="mt-8 sm:mt-10 md:mt-12 lg:mt-16 pt-6 sm:pt-8 border-t border-gray-200">
-            <div class="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-                    <div class="flex items-center gap-2 sm:gap-3">
-                        <img src="./payrent_blanc.png" alt="PayRent" class="h-6 sm:h-7 md:h-8">
-                        <span class="text-pr-dark font-bold text-base sm:text-lg md:text-xl">PayRent</span>
-                    </div>
-                    <p class="text-gray-500 text-center text-xs sm:text-sm">
-                        © 2025 PayRent - Tous droits réservés • 
-                        <a href="#" class="text-pr-red hover:text-pr-red-light transition-colors ml-1">Politique de confidentialité</a>
-                    </p>
+        <footer class="border-t border-gray-200 py-8 mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <img src="./payrent_blanc.png" alt="Logo PayRent" class="h-8">
+                    <span class="font-bold text-xl font-museo">PayRent</span>
                 </div>
+                <p class="text-sm text-gray-500">
+                    © 2025 PayRent - Tous droits réservés • 
+                    <a href="#" class="text-pr-red hover:text-pr-red-light ml-1">Politique de confidentialité</a>
+                </p>
             </div>
         </footer>
     </div>
-    
+
     <script>
         const CONFIG = {
             versionUrl: './version.json',
             appScheme: 'payrent',
             fallbackVersion: '1.0.0'
         };
-        
+
         let appVersion = CONFIG.fallbackVersion;
         let apkUrl = '';
-        
+
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         const action = urlParams.get('action') || 'accept';
-        
+
         function buildDeepLink() {
-            return token 
-                ? `${CONFIG.appScheme}://accept-invitation?token=${token}&action=${action}`
-                : `${CONFIG.appScheme}://`;
+            return token ? `${CONFIG.appScheme}://accept-invitation?token=${token}&action=${action}` : `${CONFIG.appScheme}://`;
         }
-        
+
         function updateUI() {
             const box = document.getElementById('invitation-box');
-            if (!token) {
-                box.classList.add('hidden');
-            } else {
+            if (token) {
                 box.classList.remove('hidden');
                 if (action === 'reject') {
-                    box.className = 'glass-effect rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-red-100 shadow-sm card-hover';
-                    document.getElementById('inv-icon-bg').className = 'w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0';
-                    document.getElementById('inv-icon').className = 'w-5 h-5 sm:w-6 sm:h-6 text-red-500';
-                    document.getElementById('invitation-title').textContent = 'Refuser l\'invitation';
-                    document.getElementById('invitation-text').textContent = 'Vous êtes sur le point de refuser cette invitation.';
+                    box.classList.replace('border-pr-success/20', 'border-red-200');
+                    box.querySelector('svg').classList.replace('text-pr-success', 'text-red-600');
+                    box.querySelector('h3').textContent = 'Refuser l’invitation ?';
+                    box.querySelector('p').textContent = 'Vous êtes sur le point de refuser cette invitation.';
+                    box.querySelector('button').textContent = 'Confirmer le refus';
                 }
             }
         }
-        
+
         async function fetchVersion() {
             try {
                 const res = await fetch(CONFIG.versionUrl + '?t=' + Date.now());
@@ -449,40 +283,41 @@
                     document.getElementById('android-version').textContent = data.size ? `v${appVersion} • ${data.size}` : `v${appVersion}`;
                 }
             } catch (e) {
-                document.getElementById('version-badge').textContent = `v${CONFIG.fallbackVersion}`;
-                document.getElementById('android-version').textContent = 'Télécharger';
+                console.error(e);
             }
         }
-        
+
         function downloadAndroid() {
             if (apkUrl) window.open(apkUrl, '_blank');
-            else alert('Téléchargement non disponible.');
+            else alert('Téléchargement temporairement indisponible.');
         }
-        
+
         function openApp() {
             const loading = document.getElementById('loading');
             loading.classList.remove('hidden');
             loading.classList.add('flex');
+
             window.location.href = buildDeepLink();
-            
+
             setTimeout(() => {
                 loading.classList.add('hidden');
                 loading.classList.remove('flex');
                 if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    if (confirm('PayRent n\'est pas installée.\nSouhaitez-vous télécharger l\'application ?')) {
-                        /Android/i.test(navigator.userAgent) ? downloadAndroid() : alert('L\'application iOS sera bientôt disponible.');
+                    if (confirm('PayRent n’est pas installée.\nVoulez-vous la télécharger ?')) {
+                        /Android/i.test(navigator.userAgent) ? downloadAndroid() : alert('Version iOS bientôt disponible.');
                     }
                 }
-            }, 2500);
+            }, 3000);
         }
-        
+
         document.addEventListener('DOMContentLoaded', async () => {
             updateUI();
             await fetchVersion();
             if (token && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                setTimeout(openApp, 800);
+                setTimeout(openApp, 1000);
             }
         });
     </script>
 </body>
+
 </html>
